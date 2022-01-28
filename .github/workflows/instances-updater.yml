@@ -25,15 +25,17 @@ jobs:
           pip install requests bs4
       - name: run script
         run: python get_instances.py
-          
-      - name: commit files
+        
+      - id: s1  
+        name: commit files
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add -A
-          git commit -m "update instances" -
-        if: success()
-      - name: push changes
+          git commit -m "update instances" -a
+      - id: s2
+        if: steps.s1.conclusion == 'success'
+        name: push changes
         uses: ad-m/github-push-action@v0.6.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
