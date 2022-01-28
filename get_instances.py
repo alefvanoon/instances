@@ -1,4 +1,4 @@
-import requests
+simport requests
 import json
 from bs4 import BeautifulSoup
 
