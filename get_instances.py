@@ -10,7 +10,7 @@ rJson = json.loads(r.text)
 invidiousList = []
 for instance in rJson:
     invidiousList.append(instance[0])
-mightyList["youtube"] = invidiousList
+mightyList["invidious"] = invidiousList
 
 
 # Twitter (Nitter)
@@ -28,7 +28,7 @@ for table in tables:
         td = tr.find("td")
         a = td.find("a")
         nitterList.append(a.contents[0])
-mightyList["twitter"] = nitterList
+mightyList["nitter"] = nitterList
 
 
 # Instagram (Bibliogram)
@@ -38,16 +38,37 @@ bibliogramList = []
 for instance in rJson["data"]:
     result = instance["address"]
     result = result.replace("https://", "")
-    result = result.replace("http://", "")
     bibliogramList.append(result)
-mightyList["instagram"] = bibliogramList
+mightyList["bibliogram"] = bibliogramList
+
+
+# Reddit (Teddit)
+r = requests.get(
+    'https://codeberg.org/teddit/teddit/raw/branch/main/instances.json')
+rJson = json.loads(r.text)
+tedditList = []
+for item in rJson:
+    url = item["url"]
+    if url != "":
+        url = url.replace("https://", "")
+        tedditList.append(url)
+mightyList["teddit"] = tedditList
 
 
 # Wikipedia (Wikiless)
 r = requests.get('https://wikiless.org/instances.json')
 rJson = json.loads(r.text)
-mightyList["wikipedia"] = rJson
+mightyList["wikiless"] = rJson
 
+# Medium (Scribe)
+r = requests.get(
+    'https://git.sr.ht/~edwardloveall/scribe/blob/main/docs/instances.json')
+rJson = json.loads(r.text)
+scribeList = []
+for item in rJson:
+    item = item.replace("https://", "")
+    scribeList.append(item)
+mightyList["scribe"] = scribeList
 
 # Writing to file
 json_object = json.dumps(mightyList, ensure_ascii=False, indent=2)
