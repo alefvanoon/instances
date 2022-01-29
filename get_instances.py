@@ -9,8 +9,12 @@ r = requests.get('https://api.invidious.io/instances.json')
 rJson = json.loads(r.text)
 invidiousList = []
 for instance in rJson:
-    invidiousList.append(instance[0])
+    if instance[0].endswith(".onion"):
+        invidiousList.append("http://"+instance[0])
+    else:
+        invidiousList.append("https://"+instance[0])
 mightyList["youtube"] = invidiousList
+
 
 # Twitter (Nitter)
 r = requests.get('https://github.com/zedeus/nitter/wiki/Instances')
@@ -26,7 +30,10 @@ for table in tables:
     for tr in trs:
         td = tr.find("td")
         a = td.find("a")
-        nitterList.append(a.contents[0])
+        if a.contents[0].endswith(".onion"):
+            nitterList.append("http://"+a.contents[0])
+        else:
+            nitterList.append("https://"+a.contents[0])
 mightyList["twitter"] = nitterList
 
 
