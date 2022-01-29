@@ -43,6 +43,12 @@ for instance in rJson["data"]:
 mightyList["instagram"] = bibliogramList
 
 
+# Wikipedia (Wikiless)
+r = requests.get('https://wikiless.org/instances.json')
+rJson = json.loads(r.text)
+mightyList["wikipedia"] = rJson
+
+
 # Writing to file
 json_object = json.dumps(mightyList, ensure_ascii=False, indent=2)
 with open("data.json", "w") as outfile:
