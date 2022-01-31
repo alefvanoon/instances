@@ -1,10 +1,17 @@
 import requests
 import json
+from urllib.parse import urlparse
 from bs4 import BeautifulSoup
 
 mightyList = {}
 
-# Youtube (Invidious)
+
+def get_host_name(link):
+    url = urlparse(link)
+    return url.netloc
+
+
+# Invidious
 r = requests.get('https://api.invidious.io/instances.json')
 rJson = json.loads(r.text)
 invidiousList = []
@@ -13,7 +20,7 @@ for instance in rJson:
 mightyList["invidious"] = invidiousList
 
 
-# Twitter (Nitter)
+# Nitter
 r = requests.get('https://github.com/zedeus/nitter/wiki/Instances')
 soup = BeautifulSoup(r.text, 'html.parser')
 markdownBody = soup.find(class_="markdown-body")
@@ -31,18 +38,17 @@ for table in tables:
 mightyList["nitter"] = nitterList
 
 
-# Instagram (Bibliogram)
+# Bibliogram
 r = requests.get('https://bibliogram.art/api/instances')
 rJson = json.loads(r.text)
 bibliogramList = []
-for instance in rJson["data"]:
-    result = instance["address"]
-    result = result.replace("https://", "")
-    bibliogramList.append(result)
+for item in rJson["data"]:
+    hostname = get_host_name(item["address"])
+    bibliogramList.append(hostname)
 mightyList["bibliogram"] = bibliogramList
 
 
-# Reddit (Teddit)
+# Teddit
 r = requests.get(
     'https://codeberg.org/teddit/teddit/raw/branch/main/instances.json')
 rJson = json.loads(r.text)
@@ -50,25 +56,40 @@ tedditList = []
 for item in rJson:
     url = item["url"]
     if url != "":
-        url = url.replace("https://", "")
-        tedditList.append(url)
+        tedditList.append(get_host_name(url))
 mightyList["teddit"] = tedditList
 
 
-# Wikipedia (Wikiless)
+# Wikiless
 r = requests.get('https://wikiless.org/instances.json')
 rJson = json.loads(r.text)
 mightyList["wikiless"] = rJson
 
-# Medium (Scribe)
+
+# Scribe
 r = requests.get(
     'https://git.sr.ht/~edwardloveall/scribe/blob/main/docs/instances.json')
 rJson = json.loads(r.text)
 scribeList = []
 for item in rJson:
-    item = item.replace("https://", "")
-    scribeList.append(item)
+    scribeList.append(get_host_name(item))
 mightyList["scribe"] = scribeList
+
+
+# SimplyTranslate
+r = requests.get('https://simple-web.org/instances/simplytranslate')
+simplyTranslateList = r.text.strip().split("\n")
+mightyList["simplyTranslate"] = simplyTranslateList
+
+
+# SearX
+r = requests.get('https://searx.space/data/instances.json')
+rJson = json.loads(r.text)
+searxList = []
+for instanceLink in rJson["instances"].keys():
+    url = urlparse(instanceLink)
+    searxList.append(url.netloc)
+mightyList["searx"] = searxList
 
 # Writing to file
 json_object = json.dumps(mightyList, ensure_ascii=False, indent=2)
