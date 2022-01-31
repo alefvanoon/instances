@@ -18,6 +18,7 @@ invidiousList = []
 for instance in rJson:
     invidiousList.append(instance[0])
 mightyList["invidious"] = invidiousList
+print("Wrote Invidious")
 
 
 # Nitter
@@ -36,7 +37,7 @@ for table in tables:
         a = td.find("a")
         nitterList.append(a.contents[0])
 mightyList["nitter"] = nitterList
-
+print("Wrote Nitter")
 
 # Bibliogram
 r = requests.get('https://bibliogram.art/api/instances')
@@ -46,6 +47,7 @@ for item in rJson["data"]:
     hostname = get_host_name(item["address"])
     bibliogramList.append(hostname)
 mightyList["bibliogram"] = bibliogramList
+print("Wrote Bibliogram")
 
 
 # Teddit
@@ -58,12 +60,14 @@ for item in rJson:
     if url != "":
         tedditList.append(get_host_name(url))
 mightyList["teddit"] = tedditList
+print("Wrote Teddit")
 
 
 # Wikiless
 r = requests.get('https://wikiless.org/instances.json')
 rJson = json.loads(r.text)
 mightyList["wikiless"] = rJson
+print("Wrote Wikiless")
 
 
 # Scribe
@@ -74,12 +78,14 @@ scribeList = []
 for item in rJson:
     scribeList.append(get_host_name(item))
 mightyList["scribe"] = scribeList
+print("Wrote Scribe")
 
 
 # SimplyTranslate
 r = requests.get('https://simple-web.org/instances/simplytranslate')
 simplyTranslateList = r.text.strip().split("\n")
 mightyList["simplyTranslate"] = simplyTranslateList
+print("Wrote SimplyTranslate")
 
 
 # SearX
@@ -90,10 +96,24 @@ for instanceLink in rJson["instances"].keys():
     url = urlparse(instanceLink)
     searxList.append(url.netloc)
 mightyList["searx"] = searxList
+print("Wrote SearX")
+
+
+# Whoogle
+r = requests.get(
+    'https://raw.githubusercontent.com/benbusby/whoogle-search/31f4c00aee430117d96860bae361c6408b9e0c1f/misc/instances.txt')
+tmpList = r.text.strip().split("\n")
+whoogleList = []
+for instanceLink in tmpList:
+    url = urlparse(instanceLink)
+    whoogleList.append(url.netloc)
+mightyList["whoogle"] = whoogleList
+print("Wrote Whoogle")
+
 
 # Writing to file
 json_object = json.dumps(mightyList, ensure_ascii=False, indent=2)
 with open("data.json", "w") as outfile:
     outfile.write(json_object)
-print(json_object)
+# print(json_object)
 print("Wrote: data.json")

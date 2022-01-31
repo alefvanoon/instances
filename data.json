@@ -9,8 +9,8 @@
     "invidious-us.kavin.rocks",
     "invidious.osi.kr",
     "inv.cthd.icu",
-    "youtube.076.ne.jp",
     "yt.artemislena.eu",
+    "youtube.076.ne.jp",
     "invidious.namazso.eu",
     "c7hqkpkpemu6e7emz5b4vyz7idjgdvgaaa3dyimmeojqbgpea3xqjoid.onion",
     "w6ijuptxiku4xpnnaetxvnkc5vqcdu7mgns2u77qefoixi63vbvnpnqd.onion",
@@ -259,5 +259,16 @@
     "www.webrats.xyz",
     "xeek.com",
     "searx.roflcopter.fr"
+  ],
+  "whoogle": [
+    "s.alefvanoon.xyz",
+    "search.albony.xyz",
+    "search.exonip.de",
+    "search.garudalinux.org",
+    "search.sethforprivacy.com",
+    "whoogle.fossho.st",
+    "whooglesearch.net",
+    "www.whooglesearch.ml",
+    "whoogle.dcs0.hu"
   ]
 }
