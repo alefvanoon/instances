@@ -101,7 +101,7 @@ print("Wrote SearX")
 
 # Whoogle
 r = requests.get(
-    'https://raw.githubusercontent.com/benbusby/whoogle-search/31f4c00aee430117d96860bae361c6408b9e0c1f/misc/instances.txt')
+    'https://raw.githubusercontent.com/benbusby/whoogle-search/main/misc/instances.txt')
 tmpList = r.text.strip().split("\n")
 whoogleList = []
 for instanceLink in tmpList:
